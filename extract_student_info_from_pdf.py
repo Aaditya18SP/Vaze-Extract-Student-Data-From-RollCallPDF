@@ -4,11 +4,16 @@ import pandas as pd
 
 final_list=[]
 
+#a dictionary to maintain a list of Programme name in the PDF versus the Programme name format I want in my Database.
+# This is only for TY SFC. We need to manually feed this list according to the PDF to be extracted.
+#When doing this for Other Programmes dont replace the current dictionary.
+#Comment out the current dictionary used and assign the new desired dictionay. This way next time it becomes easier to fetch the details of previous programmes again.
 course_map={"TYBVoc":"TYBVOC","TYBAMMC":"TYBAMMC","TYBCOM-AF":"TYBCOM-AF","TYBCOM-BI":"TYBCOM-BI","TYBMS":"TYBMS","TYBSC-B.T.":"TYBSC-BT","TYBSC-IT":"TYBSC-IT"}
 
 def extract_data_from_pdf(pdf_path):
     doc = fitz.open(pdf_path)
-    
+
+    #This list contains the names according to the names specified in the PDF. Important to match it exactly with the programme name in the PDF
     courses_list=["TYBVoc","TYBAMMC","TYBCOM-AF","TYBCOM-BI","TYBMS","TYBSC-B.T.","TYBSC-IT"]
     #pattern_for_name=re.compile(r'^[A-Z][A-Z]{1,}$')
     pattern_for_name=re.compile(r'^[A-Z][\'\"\'\']{0,2}[A-Z]{1,}$')
@@ -107,7 +112,7 @@ def export_to_excel_using_pandas(final_list,excel_file_path):
         print("Error occurred while writing to Excel")
         print(e)
     
-
+#Manually set the path of the file where we need to extract the data
 #THE PATH SHOULD CONTAIN FORWARD SLASHES INSTEAD OF BACKSLASHES ELSE IT TREATS IT LIKE AN ESCAPE CHARACTER   
 extract_data_from_pdf("D:/OTHER PROJECTS/Extract_Student_info/PDFS/SY-All-Course.pdf")
 
